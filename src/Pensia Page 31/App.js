@@ -12,10 +12,27 @@ const Profiles=[
 },
 {img:'https://th.bing.com/th/id/OIP.UDeXygALlGOe_yH6lJHp5QHaIr?pid=Api&rs=1',
     title:'דליה לב'
+},
+{img:'https://th.bing.com/th/id/OIP.UDeXygALlGOe_yH6lJHp5QHaIr?pid=Api&rs=1',
+    title:'דליה לב'}
+]
+
+
+
+function App() { 
+
+function SendAllData(){
+  const allVotes = localStorage.getItem('allVotes')
+
+  fetch("/setVotePoints", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ allVotes }),
+  });
 }
 
-]
-function App() { 
   return (
     <div className="App">
 
@@ -28,7 +45,7 @@ function App() {
 
         <DownDiv Profiles={Profiles}/>
         <div className='middle'>
-       <button className='sendbutton'> שלח את ההצבעה שלי </button>
+       <button className='sendbutton' onClick={SendAllData}> שלח את ההצבעה שלי </button>
        </div>
 
     </div>

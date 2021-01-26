@@ -4,6 +4,7 @@ import React,{useState} from "react";
 const isLikeRed='https://i.ibb.co/7WmRNwr/like.png';
 const isLikeRegular="https://cdn4.iconfinder.com/data/icons/multimedia-75/512/multimedia-10-256.png";
 const isLikeGreen ="https://i.ibb.co/TR08cmH/like.png"
+let allVotes =[];
 
 export default function EachProfile(props) {
 
@@ -11,12 +12,17 @@ export default function EachProfile(props) {
     const [disliked, setDisLiked] = useState(false);
 
 
-
     function changeLike(e){
       let X = e.target.alt;
 if(localStorage.getItem(`Voted${X}`) === null){
   localStorage.setItem(`Voted${X}`,true)
   localStorage.setItem(`CountVote${X}`, localStorage.getItem(`CountVote${X}`) + 1)
+
+
+  allVotes = [...allVotes,{id:X,voteUpOrDown:"Up"}]
+  localStorage.setItem('allVotes',allVotes);
+  localStorage.setItem(`added?${X}`)
+  console.log(allVotes)
 }
       if(liked === false && disliked === false)
       {
@@ -50,6 +56,10 @@ if(localStorage.getItem(`Voted${X}`) === null){
       }  
     if(localStorage.getItem(`Voted${X}`)===null){
       localStorage.setItem(`CountVote${X}`, localStorage.getItem(`CountVote${X}`) - 1)  
+
+ allVotes = [...allVotes,{id:X,voteUpOrDown:"Down"}]
+localStorage.setItem('allVotes',allVotes);
+
      }
   }
 
