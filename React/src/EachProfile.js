@@ -17,12 +17,8 @@ export default function EachProfile(props) {
 if(localStorage.getItem(`Voted${X}`) === null){
   localStorage.setItem(`Voted${X}`,true)
   localStorage.setItem(`CountVote${X}`, localStorage.getItem(`CountVote${X}`) + 1)
-
-
   allVotes = [...allVotes,{id:X,voteUpOrDown:"Up"}]
-  localStorage.setItem('allVotes',allVotes);
-  localStorage.setItem(`added?${X}`)
-  console.log(allVotes)
+  localStorage.setItem('allVotes',JSON.stringify(allVotes));
 }
       if(liked === false && disliked === false)
       {
@@ -31,6 +27,23 @@ if(localStorage.getItem(`Voted${X}`) === null){
       }  
     }
 
+     function changeUnLike(e){
+      let X = e.target.alt;
+      if(localStorage.getItem(`Voted${X}`) === null){
+        localStorage.setItem(`Voted${X}`,true)
+      if(liked === false && disliked === false)
+      {
+        setDisLiked(true)
+        localStorage.setItem(`MarkedAs${X}`,false)
+        localStorage.setItem(`CountVote${X}`, localStorage.getItem(`CountVote${X}`) - 1)  
+        allVotes = [...allVotes,{id:X,voteUpOrDown:"Down"}];
+  localStorage.setItem('allVotes',JSON.stringify(allVotes));  
+      }  
+  
+      
+
+     }
+  }
 
 
     function checkifLiked(e){
@@ -46,22 +59,6 @@ if(localStorage.getItem(`Voted${X}`) === null){
     }
     
 
-
-    function changeUnLike(e){
-      let X = e.target.alt;
-      if(liked === false && disliked === false)
-      {
-        setDisLiked(true)
-        localStorage.setItem(`MarkedAs${X}`,false)
-      }  
-    if(localStorage.getItem(`Voted${X}`)===null){
-      localStorage.setItem(`CountVote${X}`, localStorage.getItem(`CountVote${X}`) - 1)  
-
- allVotes = [...allVotes,{id:X,voteUpOrDown:"Down"}]
-localStorage.setItem('allVotes',allVotes);
-
-     }
-  }
 
   return(
     <li className='LineInList' id={props.index}>

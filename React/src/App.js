@@ -23,14 +23,19 @@ function App() {
 
 function SendAllData(){
   const allVotes = localStorage.getItem('allVotes')
-
-  fetch("/setVotePoints", {
+  fetch("/Get-setVotePoints", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ allVotes }),
+    body: JSON.stringify({ allVotes })
   });
+}
+
+function justseeit(){
+  const X = fetch('/getVotePoints');
+  const R = X.json();
+  console.log(R);
 }
 
   return (
@@ -45,7 +50,7 @@ function SendAllData(){
 
         <DownDiv Profiles={Profiles}/>
         <div className='middle'>
-       <button className='sendbutton' onClick={SendAllData}> שלח את ההצבעה שלי </button>
+       <button onLoad={justseeit} className='sendbutton' onClick={SendAllData}> שלח את ההצבעה שלי </button>
        </div>
 
     </div>
