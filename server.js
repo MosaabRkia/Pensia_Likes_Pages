@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 
-app.use(express.static("example1/build"));
+app.use(express.static("React/build"));
 var bodyParser = require("body-parser");
 
 app.use(bodyParser.json());
@@ -18,8 +18,7 @@ app.post("/Get-setVotePoints", (req, res) => {
     for (let index = 0; index < temp.length; index++) {
 
       for (let index1 = 0; index1 < allVotesServer.length; index1++) {
-        if(temp[index].voteUpOrDown === "Up")
-          { num = 1;}
+        if(temp[index].voteUpOrDown === "Up") { num = 1;}
           else if(temp[index].voteUpOrDown === "Down") {num = -1}
 
         check = null;
@@ -48,7 +47,7 @@ console.log(allVotesServer)
   })
 
 
-const port = process.env.PORT || 3002;
+const port = process.env.PORT || 3000;
 
 app.listen(port, function () {
   console.log("listening", port);

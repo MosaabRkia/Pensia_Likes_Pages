@@ -1,6 +1,7 @@
-import React from "react";
+import React,{useState} from "react";
 import HeaderUp from "./HeaderUp";
 import DownDiv from "./DownDiv";
+import Alert from './Alert'
 import './HeaderUp.css'
 
 const Profiles=[
@@ -20,27 +21,50 @@ const Profiles=[
 
 
 function App() { 
+  const [alertMessage,SetAlertMessage] = useState("");
 
 function SendAllData(){
   const allVotes = localStorage.getItem('allVotes')
-  fetch("/Get-setVotePoints", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ allVotes })
-  });
-}
+  let checker = localStorage.getItem('Sent?');
 
-function justseeit(){
-  const X = fetch('/getVotePoints');
-  const R = X.json();
-  console.log(R);
-}
+  console.log("im checker " +checker)
+    console.log("voted ? " +   checker === 'true' )
+  console.log("show all votes " + allVotes)
+  if(localStorage.getItem('Sent?') === 'true'){
+    console.log("danger alert")
+    SetAlertMessage(<Alert messageKind="Danger" strongSentence="Voted already !" regularSentence="You Can Only Vote Once Thank you!" />)
+ return;
+  }
+ if(allVotes === null || allVotes === ""){
+  console.log("fill alert")
+
+    SetAlertMessage(<Alert messageKind="Fill" strongSentence="Please Rate At Least For 1 !" regularSentence="Thank you ..." />)
+return;
+  }
+
+  if(localStorage.getItem('Sent?') === null){
+    console.log("sucess alert")
+
+    fetch("/Get-setVotePoints", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ allVotes })
+    });
+
+    SetAlertMessage(<Alert messageKind="Sucess" strongSentence="Sucessfully Vote!" regularSentence="Thank you for voting..." />)
+   
+    localStorage.setItem('Sent?',true);
+    return;
+  }}
+
+
+
 
   return (
     <div className="App">
-
+{alertMessage}
         <div className='contanier'>
         <HeaderUp 
         titleName='בנק הפועלים'  
@@ -50,7 +74,7 @@ function justseeit(){
 
         <DownDiv Profiles={Profiles}/>
         <div className='middle'>
-       <button onLoad={justseeit} className='sendbutton' onClick={SendAllData}> שלח את ההצבעה שלי </button>
+       <button className='sendbutton' onClick={SendAllData}> שלח את ההצבעה שלי </button>
        </div>
 
     </div>
