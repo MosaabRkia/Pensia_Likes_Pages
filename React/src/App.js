@@ -21,9 +21,11 @@ const Profiles=[
 
 
 function App() { 
+  
   const [alertMessage,SetAlertMessage] = useState("");
 
 function SendAllData(){
+  console.log("X")
   const allVotes = localStorage.getItem('allVotes')
   let checker = localStorage.getItem('Sent?');
 
